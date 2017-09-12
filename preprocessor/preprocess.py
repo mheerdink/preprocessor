@@ -20,6 +20,7 @@ class Preprocess:
         self.u = Utils()
 
     def clean(self, tweet_string, repl):
+        assert isinstance(tweet_string, str)
 
         cleaner_methods = self.u.get_worker_methods(self, Defines.PREPROCESS_METHODS_PREFIX)
 
@@ -35,6 +36,9 @@ class Preprocess:
         tweet_string = self.remove_unneccessary_characters(tweet_string)
         return tweet_string
 
+    def preprocess_reserved_words(self, tweet_string, repl):
+        return Patterns.RESERVED_WORDS_PATTERN.sub(repl, tweet_string)
+
     def preprocess_urls(self, tweet_string, repl):
         return Patterns.URL_PATTERN.sub(repl, tweet_string)
 
@@ -44,8 +48,8 @@ class Preprocess:
     def preprocess_mentions(self, tweet_string, repl):
         return Patterns.MENTION_PATTERN.sub(repl, tweet_string)
 
-    def preprocess_reserved_words(self, tweet_string, repl):
-        return Patterns.RESERVED_WORDS_PATTERN.sub(repl, tweet_string)
+    def preprocess_ellipsis(self, tweet_string, repl):
+        return Patterns.ELLIPSIS_PATTERN.sub(repl, tweet_string)
 
     def preprocess_emojis(self, tweet_string, repl):
         if not Defines.IS_PYTHON3:
@@ -56,7 +60,13 @@ class Preprocess:
         return Patterns.SMILEYS_PATTERN.sub(repl, tweet_string)
 
     def preprocess_numbers(self, tweet_string, repl):
-        return re.sub(Patterns.NUMBERS_PATTERN, lambda m: m.groups()[0] + repl, tweet_string)
+        return regex.sub(Patterns.NUMBERS_PATTERN, lambda m: m.groups()[0] + repl, tweet_string)
+
+    def preprocess_repetition(self, tweet_string, repl):
+        return regex.sub(Patterns.REPETITION_PATTERN, lambda m: m.groups()[1] + m.groups()[1], tweet_string) # ignore repl to avoid messing up the tokenizer
+
+    def preprocess_punctuation(self, tweet_string, repl):
+        return Patterns.PUNCTUATION_PATTERN.sub(' ', tweet_string) # replace with space to avoid messing up the tokenizer
 
     def remove_unneccessary_characters(self, tweet_string):
         return ' '.join(tweet_string.split())

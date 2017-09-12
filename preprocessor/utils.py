@@ -23,7 +23,7 @@ class Utils:
         offset = 0
         for ind, pri_method in enumerate(Defines.PRIORITISED_METHODS):
             prefixed_pri_method = prefix + pri_method
-            if pri_method in filtered_methods:
+            if prefixed_pri_method in filtered_methods:
                 filtered_methods.remove(prefixed_pri_method)
                 filtered_methods.insert(offset+ind, prefixed_pri_method)
 
