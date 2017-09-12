@@ -5,7 +5,7 @@ This module includes parse functionality
 
 """
 
-import re
+import regex
 from .utils import Utils
 from .defines import Defines, Patterns
 
@@ -44,7 +44,7 @@ class Parse:
 
         for a_parser_method in parser_methods:
             method_to_call = getattr(self, a_parser_method)
-            attr = a_parser_method.split('_')[1]
+            attr = a_parser_method.replace(Defines.PARSE_METHODS_PREFIX, '', 1)
 
             items = method_to_call(tweet_string)
             setattr(parse_result_obj, attr, items)
@@ -56,7 +56,7 @@ class Parse:
         match_items = []
         number_match_max_group_count = 2
 
-        for match_object in re.finditer(pattern, string):
+        for match_object in regex.finditer(pattern, string):
             start_index = match_object.start()
             end_index = match_object.end()
 

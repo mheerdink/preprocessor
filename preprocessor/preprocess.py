@@ -7,7 +7,7 @@ This module includes preprocess functionality
 
 """
 
-import re
+import regex
 from .defines import *
 from .utils import Utils
 

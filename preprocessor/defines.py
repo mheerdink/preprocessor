@@ -4,7 +4,6 @@ preprocessor.constants
 ~~~~~~~~~~~~
 This module includes the constant variables used in Preprocessor
 """
-import re
 import regex
 import sys
 from .enum import enum
@@ -34,21 +33,21 @@ class Defines:
 
 
 class Patterns:
-    URL_PATTERN=re.compile(r'\s*(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
-    HASHTAG_PATTERN = re.compile(r'(#|＃)[\w_]*[\w][\w_]*')
-    MENTION_PATTERN = re.compile(r"@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*")
-    RESERVED_WORDS_PATTERN = re.compile(r"^(?:RT|rt|FAV|fav)") # FAV (favouriting) is deprecated by Twitter but this is left here for backward compatibility
+    URL_PATTERN=regex.compile(r'\s*(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
+    HASHTAG_PATTERN = regex.compile(r'(#|＃)[\w_]*[\w][\w_]*')
+    MENTION_PATTERN = regex.compile(r"@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*")
+    RESERVED_WORDS_PATTERN = regex.compile(r"^((?:RT|rt|FAV|fav))") # FAV (favouriting) is deprecated by Twitter but this is left here for backward compatibility
 
     if (sys.maxunicode > 65535):
         # UCS-4
-        EMOJIS_PATTERN = re.compile(u'([\U00002600-\U000027BF])|([\U0001f300-\U0001f64F])|([\U0001f680-\U0001f6FF])')
-        ELLIPSIS_PATTERN = re.compile(u"((?:\s+[^\w#@]?[\w#@]*|https?:[^\s()<>]+|[\w#@]*)(?:\.\.\.|\U00002026)\s*)$")
+        EMOJIS_PATTERN = regex.compile(u'([\U00002600-\U000027BF])|([\U0001f300-\U0001f64F])|([\U0001f680-\U0001f6FF])')
+        ELLIPSIS_PATTERN = regex.compile(u"((?:\s+[^\w#@]?[\w#@]*|https?:[^\s()<>]+|[\w#@]*)(?:\.\.\.|\U00002026)\s*)$")
     else:
         # UCS-2
-        EMOJIS_PATTERN = re.compile(u'([\u2600-\u27BF])|([\uD83C][\uDF00-\uDFFF])|([\uD83D][\uDC00-\uDE4F])|([\uD83D][\uDE80-\uDEFF])')
-        ELLIPSIS_PATTERN = re.compile(u"((?:\s+[^\w#@]?[\w#@]*|[\w#@]*)(?:\.\.\.|\u2026)\s*)$")
+        EMOJIS_PATTERN = regex.compile(u'([\u2600-\u27BF])|([\uD83C][\uDF00-\uDFFF])|([\uD83D][\uDC00-\uDE4F])|([\uD83D][\uDE80-\uDEFF])')
+        ELLIPSIS_PATTERN = regex.compile(u"((?:\s+[^\w#@]?[\w#@]*|[\w#@]*)(?:\.\.\.|\u2026)\s*)$")
 
-    SMILEYS_PATTERN = re.compile(r"(?:X|:|;|=)(?:-)?(?:\)|\(|O|D|P|S){1,}", re.IGNORECASE)
+    SMILEYS_PATTERN = regex.compile(r"(?:X|:|;|=)(?:-)?(?:\)|\(|O|D|P|S){1,}", regex.IGNORECASE)
     NUMBERS_PATTERN = regex.compile(r"(^|\s|(?<!http[^\s]+)/|[^\w/])(?:(?:[\p{Sc}]|EUR|USD|GBP)\s*)?(\-?[,.]?\d+(?:[,.]\d+)*)(?:\s*(?:%|[\p{Sc}]|EUR|USD|GBP))?(?![,.]\d|-\w)(?=[\s\p{P}]|$)")
     REPETITION_PATTERN = regex.compile(r'((\w)\2{2,})')
     PUNCTUATION_PATTERN = regex.compile(r'(?:(?<!\d)\.(?!\d))|(?:(?<=^|\W)-)|(?:-(?=\W|$))|[^\P{P}-.]') # matches all punctuation except dashes that are part of a token

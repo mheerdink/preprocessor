@@ -43,9 +43,10 @@ def tokenize(tweet_string):
     tokenized_tweet_string = preprocessor.clean(tweet_string, Functions.TOKENIZE)
     return tokenized_tweet_string
 
-def parse(tweet_string):
+def parse(tweet_string, ignore_ellipsis=True):
     """Parses given a tweet text and returns an object`.
     :param tweet_string: A tweet text to parse.
+    :param ignore_ellipsis: Ignore broken off words at end of tweet (indicated by ellipsis, "...")
     :return: Parsed tweet.
     :rtype: preprocessor.parse.ParseResult
     Usage::
@@ -57,6 +58,9 @@ def parse(tweet_string):
       >>> parsed_tweet.urls[0].start_index
         25
     """
+    if ignore_ellipsis:
+        tweet_string = preprocessor.preprocess_ellipsis(tweet_string, '')
+
     parsed_tweet_obj = parser.parse(tweet_string)
     return parsed_tweet_obj
 
