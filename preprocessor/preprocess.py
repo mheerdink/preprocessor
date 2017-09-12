@@ -8,6 +8,7 @@ This module includes preprocess functionality
 """
 
 import regex
+from html import unescape
 from .defines import *
 from .utils import Utils
 
@@ -67,6 +68,9 @@ class Preprocess:
 
     def preprocess_punctuation(self, tweet_string, repl):
         return Patterns.PUNCTUATION_PATTERN.sub(' ', tweet_string) # replace with space to avoid messing up the tokenizer
+
+    def preprocess_html_entities(self, tweet_string, repl):
+        return unescape(tweet_string)
 
     def remove_unneccessary_characters(self, tweet_string):
         return ' '.join(tweet_string.split())
