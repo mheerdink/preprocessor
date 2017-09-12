@@ -25,7 +25,7 @@ class Preprocess:
         cleaner_methods = self.u.get_worker_methods(self, Defines.PREPROCESS_METHODS_PREFIX)
 
         for a_cleaner_method in cleaner_methods:
-            token = self.get_token_string_from_method_name(a_cleaner_method)
+            token = self.get_token_string_from_method_name(a_cleaner_method, Defines.PREPROCESS_METHODS_PREFIX)
             method_to_call = getattr(self, a_cleaner_method)
 
             if repl == Functions.CLEAN:
@@ -71,9 +71,7 @@ class Preprocess:
     def remove_unneccessary_characters(self, tweet_string):
         return ' '.join(tweet_string.split())
 
-    def get_token_string_from_method_name(self, method_name):
-        token_string = method_name.rstrip('s')
-        token_string = token_string.split('_')[1]
-        token_string = token_string.upper()
-        token_string = '$' + token_string + '$'
+    def get_token_string_from_method_name(self, method_name, prefix='preprocess_'):
+        needle = method_name.replace(prefix, '', 1)
+        token_string = ' $' + list(opts.keys())[list(opts.values()).index(needle)] + '$ '
         return token_string
