@@ -19,6 +19,7 @@ opts = {
     'ELLIPSIS': 'ellipsis',
     'REPETITION': 'repetition',
     'PUNCTUATION': 'punctuation',
+    'LOWERCASE': 'lowercase',
     'HTML_ENTITY': 'html_entities'
 }
 Options = enum(**opts)
@@ -37,7 +38,7 @@ class Patterns:
     URL_PATTERN=regex.compile(r'\s*(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
     HASHTAG_PATTERN = regex.compile(r'(#|＃)[\w_]*[\w][\w_]*')
     MENTION_PATTERN = regex.compile(r"@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*")
-    RESERVED_WORDS_PATTERN = regex.compile(r"^FAV|fav|(?:(?:RT|rt)(?=\s+@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*:))") # FAV (favouriting) is deprecated by Twitter but this is left here for backward compatibility
+    RESERVED_WORDS_PATTERN = regex.compile(r"^(?:RT|rt)\s+(@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*):\s*(?=\s)") # FAV (favouriting) is deprecated by Twitter so dropped
 
     if (sys.maxunicode > 65535):
         # UCS-4

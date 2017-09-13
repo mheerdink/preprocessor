@@ -38,7 +38,7 @@ class Preprocess:
         return tweet_string
 
     def preprocess_reserved_words(self, tweet_string, repl):
-        return Patterns.RESERVED_WORDS_PATTERN.sub(repl, tweet_string)
+        return regex.sub(Patterns.RESERVED_WORDS_PATTERN, lambda m: repl + m.groups()[0], tweet_string)
 
     def preprocess_urls(self, tweet_string, repl):
         return Patterns.URL_PATTERN.sub(repl, tweet_string)
@@ -68,6 +68,9 @@ class Preprocess:
 
     def preprocess_punctuation(self, tweet_string, repl):
         return Patterns.PUNCTUATION_PATTERN.sub(' ', tweet_string) # replace with space to avoid messing up the tokenizer
+
+    def preprocess_lowercase(self, tweet_string, repl):
+        return tweet_string.lower() # lowercase the string
 
     def preprocess_html_entities(self, tweet_string, repl):
         return unescape(tweet_string)
