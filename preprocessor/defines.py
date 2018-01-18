@@ -14,11 +14,11 @@ opts = {
     'HASHTAG':'hashtags',
     'RESERVED':'reserved_words',
     'EMOJI':'emojis',
-    'SMILEY':'smileys',
-    'NUMBER': 'numbers',
+#    'SMILEY':'smileys',
+#    'NUMBER': 'numbers',
     'ELLIPSIS': 'ellipsis',
     'REPETITION': 'repetition',
-    'PUNCTUATION': 'punctuation',
+#    'PUNCTUATION': 'punctuation',
     'LOWERCASE': 'lowercase',
     'HTML_ENTITY': 'html_entities'
 }
@@ -35,7 +35,7 @@ class Defines:
 
 
 class Patterns:
-    URL_PATTERN=regex.compile(r'\s*(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
+    URL_PATTERN=regex.compile(r'\s*(?i)\b((?:https?:/{1,3}|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))*(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
     HASHTAG_PATTERN = regex.compile(r'(#|＃)[\w_]*[\w][\w_]*')
     MENTION_PATTERN = regex.compile(r"@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*")
     RESERVED_WORDS_PATTERN = regex.compile(r"^(?:RT|rt)\s+(@[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*):\s*(?=\s)") # FAV (favouriting) is deprecated by Twitter so dropped
